@@ -120,10 +120,10 @@ torch.save(discriminator.state_dict(), "../model-states/WDis-[{}-Epochs]".format
 
 # Load generator and discriminator
 generator = Generator()
-generator.load_state_dict(torch.load('../model-states/Gen-[5-Epochs]'))
+generator.load_state_dict(torch.load('../model-states/WGen-[5-Epochs]'))
 
 discriminator = Discriminator()
-discriminator.load_state_dict(torch.load('../model-states/Dis-[5-Epochs]'))
+discriminator.load_state_dict(torch.load('../model-states/WDis-[5-Epochs]'))
         
 # Helper function to show generated images
 def imshow(inputs):
