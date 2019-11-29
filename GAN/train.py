@@ -69,8 +69,10 @@ for epoch in tqdm(range(EPOCHS)):
         images = images.view(-1, 1, 28, 28)
         real_imgs = Variable(images.type(torch.Tensor)).to(device)
         b_size = len(images)
+        
         real = torch.full((b_size,), real_label, device=device).to(device)
         fake = torch.full((b_size,), fake_label, device=device).to(device)
+        
         # zero Generator grads
         optimizerG.zero_grad()
         
