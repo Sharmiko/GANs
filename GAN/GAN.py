@@ -1,6 +1,6 @@
 import torch.nn as nn
 
-
+# Generator class
 class Generator(nn.Module):
     
     def __init__(self):
@@ -62,6 +62,7 @@ class Generator(nn.Module):
         return t        
 
 
+# Discriminator class
 class Discriminator(nn.Module):
     
     def __init__(self):
@@ -107,21 +108,3 @@ class Discriminator(nn.Module):
         t = self.out(t)
         
         return t
-        
-        
-class GAN(nn.Module):
-    
-    def __init__(self):
-        
-        super(GAN, self).__init__()
-        
-        self.generator = Generator()
-        self.discriminator = Discriminator()
-        
-    def forward(self, t):
-        
-        generated = self.generator(t)
-        
-        predicted = self.discriminator(t)
-        
-        return generated, predicted
