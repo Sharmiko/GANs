@@ -21,7 +21,6 @@ train_data /= 255.0
 # Create torch Dataset object
 train_data = utils.TensorDataset(train_data)
 
-
 # Create DataLoader object
 trainloader = utils.DataLoader(train_data, batch_size=32)
 
@@ -42,13 +41,9 @@ optimizerD = optim.RMSprop(discriminator.parameters(), lr=0.0002)
 real_label = 1
 fake_label = -1
 
-# create latent vector for generator
-noise = torch.randn(32, 100, 1, 1, device=device)
-
 # Training loop
 
 img_list=[]
-iters = 0
 
 EPOCHS = 5
 
@@ -115,15 +110,15 @@ print("G loss: {} \t D loss: {}".format(g_loss, d_loss))
 
     
 # Save model state
-torch.save(generator.state_dict(), "../model-states/WGen-[{}-Epochs]".format(EPOCHS))
-torch.save(discriminator.state_dict(), "../model-states/WDis-[{}-Epochs]".format(EPOCHS))
+torch.save(generator.state_dict(), "../model-states/WGAN/Gen-[{}-Epochs]".format(EPOCHS))
+torch.save(discriminator.state_dict(), "../model-states/WGAN/Dis-[{}-Epochs]".format(EPOCHS))
 
 # Load generator and discriminator
 generator = Generator()
-generator.load_state_dict(torch.load('../model-states/WGen-[5-Epochs]'))
+generator.load_state_dict(torch.load('../model-states/WGAN/Gen-[5-Epochs]'))
 
 discriminator = Discriminator()
-discriminator.load_state_dict(torch.load('../model-states/WDis-[5-Epochs]'))
+discriminator.load_state_dict(torch.load('../model-states/WGAN/Dis-[5-Epochs]'))
         
 # Helper function to show generated images
 def imshow(inputs):
