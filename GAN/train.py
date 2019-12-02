@@ -15,13 +15,11 @@ device = ("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # Load training data from numpy array and convert it to tensor
 train_data = torch.from_numpy(np.load('../data/train_camel.npy'))
-
 train_data = train_data.float()
 train_data /= 255.0
 
 # Create torch Dataset object
 train_data = utils.TensorDataset(train_data)
-
 
 # Create DataLoader object
 trainloader = utils.DataLoader(train_data, batch_size=32)
@@ -46,13 +44,9 @@ criterion.to(device)
 real_label = 1
 fake_label = 0
 
-# create latent vector for generator
-noise = torch.randn(32, 100, 1, 1, device=device)
-
 # Training loop
 
 img_list=[]
-iters = 0
 
 EPOCHS = 5
 
@@ -111,15 +105,15 @@ print("G loss: {} \t D loss: {}".format(g_loss, d_loss))
 
     
 # Save model state
-torch.save(generator.state_dict(), "../model-states/Gen-[{}-Epochs]".format(EPOCHS))
-torch.save(discriminator.state_dict(), "../model-states/Dis-[{}-Epochs]".format(EPOCHS))
+torch.save(generator.state_dict(), "../model-states/GAN/Gen-[{}-Epochs]".format(EPOCHS))
+torch.save(discriminator.state_dict(), "../model-states/GAN/Dis-[{}-Epochs]".format(EPOCHS))
 
 # Load generator and discriminator
 generator = Generator()
-generator.load_state_dict(torch.load('../model-states/Gen-[5-Epochs]'))
+generator.load_state_dict(torch.load('../model-states/GAN/Gen-[5-Epochs]'))
 
 discriminator = Discriminator()
-discriminator.load_state_dict(torch.load('../model-states/Dis-[5-Epochs]'))
+discriminator.load_state_dict(torch.load('../model-states/GAN/Dis-[5-Epochs]'))
         
 # Helper function to show generated images
 def imshow(inputs):
