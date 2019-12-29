@@ -144,15 +144,15 @@ print("G loss: {} \t D loss: {}".format(g_loss, d_loss))
 
     
 # Save model state
-torch.save(generator.state_dict(), "../model-states/WGAN-GP/Gen-[{}-Epochs]".format(EPOCHS))
-torch.save(discriminator.state_dict(), "../model-states/WGAN-GP/Dis-[{}-Epochs]".format(EPOCHS))
+torch.save(generator.state_dict(), "../model_states/WGAN-GP/Gen-[{}-Epochs]".format(EPOCHS))
+torch.save(discriminator.state_dict(), "../model_states/WGAN-GP/Dis-[{}-Epochs]".format(EPOCHS))
 
 # Load generator and discriminator
 generator = Generator()
-generator.load_state_dict(torch.load('../model-states/WGAN-GP/Gen-[5-Epochs]'))
+generator.load_state_dict(torch.load('../model_states/WGAN-GP/Gen-[5-Epochs]'))
 
 discriminator = Discriminator()
-discriminator.load_state_dict(torch.load('../model-states/WGAN-GP/Dis-[5-Epochs]'))
+discriminator.load_state_dict(torch.load('../model_states/WGAN-GP/Dis-[5-Epochs]'))
         
 # Helper function to show generated images
 def imshow(inputs):
