@@ -7,7 +7,8 @@ import torchvision
 from torchvision.utils import save_image
 from torch.utils.data import DataLoader
 
-from Generator import UnetGenerator
+from ResNetGenerator import ResNetGenerator
+from UNetGenerator import UnetGenerator
 from Discriminator import Discriminator
 
 from tqdm import tqdm
@@ -15,6 +16,9 @@ from tqdm import tqdm
 device = ("cuda:0" if torch.cuda.is_available() else "cpu")
 
 BATCH_SIZE = 4
+EPOCHS = 5
+dataset = "monet2photo" # or "apple2orange"
+generator = "resnet" # or "unet"
 
 def load_dataset(path, b_size):
     """
@@ -28,17 +32,23 @@ def load_dataset(path, b_size):
             num_workers=0, shuffle=True)
     return loader
 
-trainA_loader = load_dataset('../data/apple2orange/train_A/', BATCH_SIZE)
-testA_loader = load_dataset('../data/apple2orange/test_A/', BATCH_SIZE)
+trainA_loader = load_dataset('../data/{}/train_A/'.format(dataset), BATCH_SIZE)
+testA_loader = load_dataset('../data/{}/test_A/'.format(dataset), BATCH_SIZE)
 
-trainB_loader = load_dataset('../data/apple2orange/train_B/', BATCH_SIZE)
-testB_loader = load_dataset('../data/apple2orange/test_B/', BATCH_SIZE)
+trainB_loader = load_dataset('../data/{}/train_B/'.format(dataset), BATCH_SIZE)
+testB_loader = load_dataset('../data/{}/test_B/'.format(dataset), BATCH_SIZE)
 
 # Create models
-generator_AB = UnetGenerator()
+if generator == "resnet":
+    generator_AB = ResNetGenerator()
+else :
+    generator_AB = UnetGenerator()
 generator_AB.to(device)
 
-generator_BA = UnetGenerator()
+if generator == "resnet":
+    generator_BA = ResNetGenerator()
+else:
+    generator_BA = UnetGenerator()
 generator_BA.to(device)
 
 
@@ -69,8 +79,6 @@ optimizer_DB = optim.Adam(discriminator_B.parameters(),
 
 
 ##### Training Loop #####
-
-EPOCHS = 5
 
 for epoch in tqdm(range(EPOCHS)):
     

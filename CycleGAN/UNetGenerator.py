@@ -128,26 +128,3 @@ class UnetGenerator(nn.Module):
         t = self.out(u4)
 
         return t
-        
-    
-class ResNetGenerator(nn.Module):
-    pass
-
-
-class Residual(nn.Module):
-    
-    def __init__(self):
-        super(Residual, self).__init__()
-        
-        self.conv1 = nn.Conv2d(in_channels=1, out_channels=3, kernel_size=3,
-                               padding=1)
-        self.instance_norm = nn.InstanceNorm1d(3)
-        self.relu = nn.ReLU()
-        
-    def forward(self, t, skip_layer):
-        pass
-
-
-
-
-
